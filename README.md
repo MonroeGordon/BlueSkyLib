@@ -28,6 +28,7 @@ Details:
 ### Loss Functions (loss.py)
 Includes a class containing loss functions.
 
+Details:
 - **Loss**: Class containing the following loss functions:
   - Binary Cross-entropy
   - Categorical Cross-entropy
@@ -42,6 +43,7 @@ Includes a class containing loss functions.
 ### Regularization Functions (regularizer.py)
 Includes a class containing regularization functions.
 
+Details:
 - **Regularizer**: Class containing the following regularization functions:
   - None: No regularization performed
   - Elastic Net Regerssion
@@ -51,6 +53,7 @@ Includes a class containing regularization functions.
 ### Optimization Functions (optimizer.py)
 Includes a class containing optimization functions.
 
+Details:
 - **Optimizer**: Class containing the following optimization functions:
   - None: No optimization performed
   - AdaDelta
