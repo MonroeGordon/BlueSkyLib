@@ -6,7 +6,12 @@ from tools.data import train_test_split
 import cupy as cp
 import numpy as np
 
-class KNearestNeighbor:
+class KNN:
+    '''
+    K-Nearest Neighbors (KNN) class. Provides algorithms for predicting class labels or target values using k-nearest
+    neighbors.
+    '''
+
     @staticmethod
     def predict(x_train: np.ndarray | cp.ndarray,
                 y_train: list,
@@ -151,7 +156,7 @@ class KNearestNeighbor:
 
         for k in range(1, max_k + 1):
             x_train, x_test, y_train, y_test = train_test_split(x, np.array(y), test_size=0.3, random_state=42)
-            y_pred = KNearestNeighbor.predict(x_train, y_train, x_test, k)
+            y_pred = KNN.predict(x_train, y_train, x_test, k)
             acc = accuracy(y_test, y_pred)
 
             if acc > best_accuracy:
