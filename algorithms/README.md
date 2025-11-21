@@ -6,6 +6,6 @@ Contains a class for predicting class labels or target values using the K-neares
 
 Details:
 - **KNearestNeighbor**: Class containing functions for predicting class labels or target values.
-  - predict: Predicts class labels for the test data after training on the training data.
-  - regression: Predicts target values for the test data after training on the training data.
-  - find_optimal_k: Finds the best K value using cross-validation on the dataset.
+  - Predict: Predicts class labels for the test data after training on the training data.
+  - Regression: Predicts target values for the test data after training on the training data.
+  - Find Optimal K: Finds the best K value using cross-validation on the dataset.
