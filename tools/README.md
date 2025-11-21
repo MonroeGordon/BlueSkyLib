@@ -31,4 +31,5 @@ Details:
 Provides tools for dimensionality reduction via various algorithms.
 
 Details:
+- _LDA Projection_: Reduces the dimensionality of a matrix using a linear discriminant analysis (LDA) matrix projection.
 - _SVD Dimensionality Reduction_: Reduces the dimensionality of a matrix using singular value decomposition (SVD).
