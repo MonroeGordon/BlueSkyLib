@@ -5,7 +5,7 @@ Module containing linear algebra functions used to process matrices, systems of 
 Contains functions for decomposing matrices such as the LU decomposition and SVD. Decompositions of matrices allow for processing systems of linear equations and performing task such as dimensionality reduction, image compression, collaborative filtering, or principal component analysis.
 
 Details:
-- __LU Decomposition__: Decomposes a square matrix into lower and upper triangular matrices.
+- _LU Decomposition_: Decomposes a square matrix into lower and upper triangular matrices.
 - Singular Value Decomposition (SVD): Decomposes a matrix into the product of orthogonal row/column basis vector matrices and a diagonal matrix of singular values.
 
 ### Eigenvalues and Eigenvectors (eigen.py)
