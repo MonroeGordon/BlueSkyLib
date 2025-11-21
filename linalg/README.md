@@ -19,5 +19,18 @@ Details:
 - LU Solver: Solves a system of linear equations by performing LU decomposition on the coefficient matrix, and then performing forward and backward substitutions to solve for Ly = b and Ux = y respe
 - Matrix Inversion: Solves a system of linear equations by inverting the coefficient matrix (if possible) and multiplying it with both sides of Ax = b, giving x = A^-1 * b.
 
+### Linear Regression (linreg.py)
+Contains functions for performing linear regression using ordinary least squares (OLS).
+
+Details:
+- OLS: Calculates the coefficients of the linear regression model using ordinary least squars (OLS).
+- OLS Predict: Makes predictions using the ordinary least squares (OLS) coefficients.
+
 ### Quadratic Equations (quadratic.py)
 Contains functions for solving quadratic equations, performing discriminant analysis, and converting quadratic equations to vertex form.
+
+### Miscellaneous Functions (functions.py)
+Contains miscellaneous linear algebra functions that are relevant to machine learning and AI.
+
+Details:
+- Euclidean Distance: Calculates the Euclidean distance between two points.
