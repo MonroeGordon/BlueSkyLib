@@ -18,3 +18,10 @@ Details:
   - _Between Class Scatter_: Computes the between-class scatter matrix of the input feature matrix and class labels, using the computed mean vectors for each class.
   - _Means_: Computes the mean vectors for each class.
   - _Within Class Scatter_: Computes the within-class scatter matrix of the input feature matrix and class labels, using the computed mean vectors for each class.
+
+### Principal Component Analysis (pca.py)
+Contains a class for performing principal component analysis on an input feature matrix.
+
+Details:
+- **PCA**: Class containing a function for calculating the covariance matrix of an input feature matrix.
+  - _Covariance Matrix_: Calculates the covariance matrix of an input feature matrix.
