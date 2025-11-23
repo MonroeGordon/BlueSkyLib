@@ -6,7 +6,7 @@ import cupy as cp
 import numpy as np
 
 def eigdecomp(matrix: np.ndarray | cp.ndarray,
-               device: str="cpu") -> tuple:
+              device: str="cpu") -> tuple:
     '''
     Perform eigendecomposition on a matrix.
     :param matrix: A square matrix (2-dimensional ndarray).
@@ -22,7 +22,7 @@ def eigdecomp(matrix: np.ndarray | cp.ndarray,
         if isinstance(nmtx, cp.ndarray):
             nmtx = cp.asnumpy(nmtx)
 
-        e_vals, e_vecs = eigen(nmtx)
+        e_vals, e_vecs = eigen(nmtx, device=device)
 
         sorted_indices = np.argsort(e_vals)[::-1]
     else:
@@ -31,7 +31,7 @@ def eigdecomp(matrix: np.ndarray | cp.ndarray,
         if isinstance(cmtx, np.ndarray):
             cmtx = cp.asarray(cmtx)
 
-        e_vals, e_vecs = eigen(cmtx)
+        e_vals, e_vecs = eigen(cmtx, device=device)
 
         sorted_indices = np.argsort(e_vals)[::-1]
 
@@ -40,7 +40,7 @@ def eigdecomp(matrix: np.ndarray | cp.ndarray,
 def lu_decomp(matrix: np.ndarray | cp.ndarray,
               permute_l: bool=False,
               overwrite_matrix: bool=False,
-              check_finite: bool=False,
+              check_finite: bool=True,
               device: str="cpu") -> tuple:
     '''
     Compute the LU decomposition of a square matrix.
@@ -61,17 +61,26 @@ def lu_decomp(matrix: np.ndarray | cp.ndarray,
         if isinstance(nmtx, cp.ndarray):
             nmtx = cp.asnumpy(nmtx)
 
-        return slu(nmtx, permute_l, overwrite_matrix, check_finite)
+        if permute_l:
+            l, u = slu(nmtx, True, overwrite_matrix, check_finite)
+        else:
+            _, l, u = slu(nmtx, False, overwrite_matrix, check_finite)
     else:
         cmtx = matrix
+        cmtx = cmtx.astype(cp.float32)
 
         if isinstance(cmtx, np.ndarray):
-            cmtx = cp.asarray(cmtx)
+            cmtx = cp.asarray(cmtx, dtype=cp.float32)
 
-        return clu(cmtx, permute_l, overwrite_matrix, check_finite)
+        if permute_l:
+            l, u = clu(cmtx, True, overwrite_matrix, check_finite)
+        else:
+            _, l, u = clu(cmtx, False, overwrite_matrix, check_finite)
+
+    return l, u
 
 def svd_decomp(matrix: np.ndarray | cp.ndarray,
-               device: str="cpu") -> tuple[np.ndarray | cp.ndarray, np.ndarray | cp.ndarray, np.ndarray | cp.ndarray]:
+               device: str="cpu") -> tuple:
     '''
     Perform Singular Value Decomposition (SVD) on a matrix.
     :param matrix: Input matrix (2-dimensional ndarray).
@@ -79,8 +88,18 @@ def svd_decomp(matrix: np.ndarray | cp.ndarray,
     :return: U, S, V matrices.
     '''
     if device == "cpu":
-        u, s, v = np.linalg.svd(matrix)
+        nmtx = matrix
+
+        if isinstance(nmtx, cp.ndarray):
+            nmtx = cp.asnumpy(nmtx)
+
+        u, s, v = np.linalg.svd(nmtx)
     else:
-        u, s, v = cp.linalg.svd(matrix)
+        cmtx = matrix
+
+        if isinstance(cmtx, np.ndarray):
+            cmtx = cp.asarray(cmtx)
+
+        u, s, v = cp.linalg.svd(cmtx)
 
     return u, s, v

@@ -1,4 +1,4 @@
-from decomposition import lu
+from linalg.decomposition import lu_decomp
 
 import cupy as cp
 import numpy as np
@@ -16,15 +16,33 @@ def _backward_substitution(u: np.ndarray | cp.ndarray,
     n = u.shape[0]
 
     if device == "cpu":
-        x = np.zeros_like(y)
+        nu = u
+        ny = y
+
+        if isinstance(nu, cp.ndarray):
+            nu = cp.asnumpy(nu)
+
+        if isinstance(ny, cp.ndarray):
+            ny = cp.asnumpy(ny)
+
+        x = np.zeros_like(ny)
 
         for i in range(n - 1, -1, -1):
-            x[i] = (y[i] - np.dot(u[i, i + 1:], x[i + 1:])) / u[i, i]
+            x[i] = (ny[i] - np.dot(nu[i, i + 1:], x[i + 1:])) / nu[i, i]
     else:
-        x = cp.zeros_like(y)
+        cu = u
+        cy = y
+
+        if isinstance(cu, np.ndarray):
+            cu = cp.asarray(cu)
+
+        if isinstance(cy, np.ndarray):
+            cy = cp.asarray(cy)
+
+        x = cp.zeros_like(cy)
 
         for i in range(n - 1, -1, -1):
-            x[i] = (y[i] - cp.dot(u[i, i + 1:], x[i + 1:])) / u[i, i]
+            x[i] = (cy[i] - cp.dot(cu[i, i + 1:], x[i + 1:])) / cu[i, i]
 
     return x
 
@@ -40,15 +58,33 @@ def _forward_substitution(l: np.ndarray | cp.ndarray,
     n = l.shape[0]
 
     if device == "cpu":
-        y = np.zeros_like(b)
+        nl = l
+        nb = b
+
+        if isinstance(nl, cp.ndarray):
+            nl = cp.asnumpy(nl)
+
+        if isinstance(nb, cp.ndarray):
+            nb = cp.asnumpy(nb)
+
+        y = np.zeros_like(nb)
 
         for i in range(n):
-            y[i] = (b[i] - np.dot(l[i, :i], y[:i])) / l[i, i]
+            y[i] = (nb[i] - np.dot(nl[i, :i], y[:i])) / nl[i, i]
     else:
-        y = cp.zeros_like(b)
+        cl = l
+        cb = b
+
+        if isinstance(cl, np.ndarray):
+            cl = cp.asarray(cl)
+
+        if isinstance(cb, np.ndarray):
+            cb = cp.asarray(cb)
+
+        y = cp.zeros_like(cb)
 
         for i in range(n):
-            y[i] = (b[i] - cp.dot(l[i, :i], y[:i])) / l[i, i]
+            y[i] = (cb[i] - cp.dot(cl[i, :i], y[:i])) / cl[i, i]
 
     return y
 
@@ -109,7 +145,7 @@ def gaussian_elimination(a: np.ndarray | cp.ndarray,
             for j in range(i + 1, n):
                 ab[j] = ab[j] - ab[j][i] * ab[i]
 
-        x = np.zeros(n)
+        x = cp.zeros(n)
 
         for i in range(n - 1, -1, -1):
             x[i] = ab[i][-1] - cp.sum(ab[i][i + 1:n] * x[i + 1:n])
@@ -131,7 +167,7 @@ def lu_solve(a: np.ndarray | cp.ndarray,
 
     br = b.flatten()
 
-    l, u = lu(a, permute_l=True, device=device)
+    l, u = lu_decomp(a, device=device)
 
     y = _forward_substitution(l, br, device)
 

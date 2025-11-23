@@ -28,4 +28,4 @@ def eigen(matrix: np.ndarray | cp.ndarray,
         if isinstance(cmtx, np.ndarray):
             cmtx = cp.asarray(cmtx)
 
-        return cp.linalg.eigh(cmtx, uplo)
+        return cp.linalg.eigh(cmtx, "L" if uplo.lower() == "l" else "U")
