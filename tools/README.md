@@ -16,6 +16,18 @@ Details:
 - _PCA Data Reconstruction_: Reconstructs a data matrix from a data matrix with dimensions reduced by PCA and its eigenvectors.
 - _Train Test Split_: Splits a dataset into training and test sets.
 
+### Datasets (datasets.py)
+Provides tools for accessing a library of datasets that can be used for training and testing machine learning/AI models.
+
+Details:
+- **Data**: Class providing storage and access to input feature data and target value data from a dataset.
+  - _Class Names_: Returns the names of the classes in the dataset.
+  - _Feature Names_: Returns the names of the features in the dataset.
+  - _Features_: Returns the input feature matrix.
+  - _Targets_: Returns the target value matrix, which may contain class name index values or be a one hot encoding of the classes, depending on how the dataset was loaded.
+- **Datasets**: Class providing access to a library of datasets and the ability to load them into a Data class for accessing and using the data.
+  - _Load Iris_: Loads the Iris Flower dataset into a data class.
+
 ### Metrics (metrics.py)
 Provides tools for measuring various metrics in machine learning and AI models.
 
