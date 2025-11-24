@@ -5,7 +5,8 @@ An AI/machine learning library containing AI mathematical functions and AI model
 Module containing machine learning and AI algorithms that are separate from models.
 
 Details:
-- K-nearest neighbors
+- K-Means Clustering
+- K-Nearest Neighbors
 - Linear Discriminant Analysis
 - Principal Component Analysis
 
