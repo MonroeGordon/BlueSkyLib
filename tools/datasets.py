@@ -18,7 +18,7 @@ class Data:
         :param x_names: Feature names (number of features).
         :param y_names: Class names (number of classes).
         :param x: Input feature matrix (number samples, number features).
-        :param y: Target value(s) (target names, indices, or one hot encoded).
+        :param y: Target value(s) (target values, class indices, or one hot encoded).
         '''
         if x.ndim != 2:
             raise ValueError("Data: parameter 'x' must be a matrix (2-dimensional ndarray).")
@@ -77,7 +77,7 @@ class Datasets:
     AI model can process.
     '''
 
-    DATASET_PATH = "C:/BlueSkyAI/Projects/Python/BlueSkyLib/datasets/"
+    DATASET_PATH = "datasets/"
 
     @staticmethod
     def load_iris(one_hot: bool=False) -> Data:
@@ -104,5 +104,76 @@ class Datasets:
             for i in range(len(y_names)):
                 indices = np.where(y == y_names[i])
                 y[indices] = i
+
+        return Data(x_names, y_names, x, y)
+
+    @staticmethod
+    def synth_regression(n_samples: int=100,
+                         n_features: int=1,
+                         n_informative: int=1,
+                         n_targets: int=1,
+                         bias: float=0.0,
+                         noise: float=1.0,
+                         random_state: int=None,
+                         distribution: str="uniform",
+                         coefficients: bool=False) -> Data | tuple:
+        '''
+        Creates a synthetic regression dataset.
+        :param n_samples: Number of data samples to generate.
+        :param n_features: Number of features to generate.
+        :param n_informative: Number of features contributing to the target variable(s).
+        :param n_targets: Number of target variables.
+        :param bias: The intercept term in the linear model.
+        :param noise: Standard deviation of the noise generated for the data.
+        :param random_state: Random seed for reproducibility.
+        :param distribution: Uniform or normal distribution for random feature values.
+        :param coefficients: Return the true coefficients of the linear model.
+        :return: A Data class containing the synthetic regression dataset.
+        '''
+        if n_samples < 1:
+            raise ValueError("Datasets @ synth_regression: parameter 'n_samples' needs to exceed 0.")
+
+        if n_features < 1:
+            raise ValueError("Datasets @ synth_regression: parameter 'n_features' needs to exceed 0.")
+
+        if n_informative < 1:
+            raise ValueError("Datasets @ synth_regression: parameter 'n_informative' needs to exceed 0.")
+
+        if n_targets < 1:
+            raise ValueError("Datasets @ synth_regression: parameter 'n_targets' needs to exceed 0.")
+
+        if not noise > 0.0:
+            raise ValueError("Datasets @ synth_regression: parameter 'noise' needs to exceed 0.0.")
+
+        if distribution != "uniform" and distribution != "normal":
+            raise ValueError("Datasets @ synth_regression: parameter 'distribution' needs to be 'uniform' or 'normal'.")
+
+        if n_informative > n_features:
+            raise ValueError("Datasets @ synth_regression: parameter 'n_informative' cannot exceed parameter "
+                             "'n_features'.")
+
+        if distribution == "uniform":
+            x = np.random.uniform(low=-10.0, high=10.0, size=(n_samples, n_features))
+        else:
+            x = np.random.normal(loc=0.0, scale=1.0, size=(n_samples, n_features))
+
+        c = np.random.normal(loc=0.0, scale=1.0, size=(n_informative, n_targets))
+        xi = [np.random.choice(n_features, size=n_informative, replace=False) for _ in range(n_targets)]
+
+        n = np.random.normal(loc=0.0, scale=noise, size=(n_targets, n_samples))
+
+        y = np.array([(x[:, xi[i]] @ c[:, i] + n[i, :]) for i in range(n_targets)]).reshape((n_samples, n_targets))
+
+        x_names = []
+        y_names = []
+
+        for i in range(n_features):
+            x_names.append(f"Feature {i}")
+
+        for i in range(n_targets):
+            y_names.append(f"Class {i}")
+
+        x_names = np.array(x_names)
+        y_names = np.array(y_names)
 
         return Data(x_names, y_names, x, y)
