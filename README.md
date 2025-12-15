@@ -16,12 +16,12 @@ Details:
 Module containing linear algebra functions used to process matrices, systems of equations, and other AI relevant mathematics.
 
 Details:
-- Matrix decompositions
-- Eigenvalues and eigenvectors
-- Systems of linear equations
-- Linear regression
-- Quadratic equations
-- Miscellaneous functions
+- Matrix Decompositions
+- Eigenvalues and Eigenvectors
+- Systems of Linear Equations
+- Linear Regression
+- Quadratic Equations
+- Miscellaneous Functions
 
 ### Models Module
 Module containing various machine learning/AI models that can be created, trained, and deployed.
@@ -35,19 +35,20 @@ Details:
 Module containing various neural network architectures that can be created, trained, and deployed.
 
 Details:
-- Logistic regression model
-- Multilayer perceptron neural network
+- Logistic Regression Model
+- Multilayer Perceptron Neural Network
+- Support Vector Machine
 
 ### Tools Module
 Module containing various tools to aid in the training, testing, and/or deployment of machine learning and AI algorithms and models.
 
 Details:
 - Compression
-- Data processing
+- Data Processing
 - Datasets
 - Metrics
-- Data plotting
-- Dimensionality reduction
+- Data Plotting
+- Dimensionality Reduction
 
 ### Datasets Folder
 Folder containing all available datasets that can be loaded and used by this library,
