@@ -5,9 +5,11 @@ An AI/machine learning library containing AI mathematical functions and AI model
 Module containing machine learning and AI algorithms that are separate from models.
 
 Details:
+- Hidden Markov Model and Markov Chain
 - K-Means Clustering
 - K-Nearest Neighbors
 - Linear Discriminant Analysis
+- Particle Filter
 - Principal Component Analysis
 
 ### Linalg Module
@@ -20,6 +22,14 @@ Details:
 - Linear regression
 - Quadratic equations
 - Miscellaneous functions
+
+### Models Module
+Module containing various machine learning/AI models that can be created, trained, and deployed.
+
+Details:
+- Decision Tree
+- Gaussian Mixture Model
+- Linear Discriminant Analysis
 
 ### Neural Module
 Module containing various neural network architectures that can be created, trained, and deployed.
@@ -43,4 +53,5 @@ Details:
 Folder containing all available datasets that can be loaded and used by this library,
 
 Details:
+- Breast Cancer Dataset (breast-cancer.csv)
 - Iris Flower Dataset (iris.csv)
